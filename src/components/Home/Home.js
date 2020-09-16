@@ -1,14 +1,17 @@
 import React from 'react';
 import Header from '../Header/Header';
 import './Home.css'
+import { Container } from 'react-bootstrap';
 
 const Home = () => {
     return (
         <div className="home-bg">
             <div className="card-overlay">
-            <Header />
+                <Container>
+                    <Header />
+                </Container>
             </div>
-           
+
         </div>
     );
 };

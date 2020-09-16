@@ -1,22 +1,27 @@
 import React from 'react';
-import { Navbar, Nav, FormControl, Form } from 'react-bootstrap';
+import { Navbar, Nav, FormControl, Form, Button } from 'react-bootstrap';
+import logo from '../../images/Logo.png';
+// import SearchIcon from '@material-ui/icons/Search';
 
 const Header = () => {
 
     return (
         <Navbar bg="none" expand="lg" variant="dark">
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home"> <img className="logo" src={logo} alt="" /> </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                </Nav>
-                <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                <Form className="search-form">
+                    <FormControl type="text" placeholder="Search your destination" className="mr-sm-2 input-search" />
+                    {/* <SearchIcon /> */}
                 </Form>
+                <Nav className="mr-auto">
+                    <Nav.Link href="#home">News</Nav.Link>
+                    <Nav.Link href="#link">Destination</Nav.Link>
+                    <Nav.Link href="#link">Blog</Nav.Link>
+                    <Nav.Link href="#link">Contact</Nav.Link>
+                    <Button className="login-btn" variant="warning">Login</Button>
+                </Nav>
+
             </Navbar.Collapse>
         </Navbar>
     );

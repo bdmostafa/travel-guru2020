@@ -8,3 +8,17 @@
     background: rgba(0, 0, 0, 0.7);
     min-height: 100vh;
 }
+
+.logo {
+    width: 25%;
+}
+
+.search-form .input-search {
+    background: transparent;
+    width: 15rem;
+}
+
+.login-btn {
+    max-width: 15rem;
+    font-weight: bold;
+}
