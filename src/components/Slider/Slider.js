@@ -5,27 +5,10 @@ import coxsBazar from '../../images/Image/Rectangle 1.png';
 import sreemangal from '../../images/Image/Sreemongol.png';
 import sundarbans from '../../images/Image/sundorbon.png';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { Link } from 'react-router-dom';
+import areaData from '../../DataStore/AreaData';
 
-
-let items = [
-    {
-        name: "COX'S BAZAR",
-        description: "Cox's Bazar is a city, fishing port, tourism centre and district headquarters in southeastern Bangladesh. It is famous mostly for its long natural sandy beach, and it ...",
-        img: coxsBazar
-    },
-    {
-        name: "SREEMANGAL",
-        description: "Madhobpur Lake is one of the main tourist attractions in the area, and is home to the Great White-Bellied Heron, the only confirmed site in Bangladesh. It is said the name Sreemangal (or Srimangal) is named after Sri Das and Mangal Das; two brothers who settled on the banks of the Hail Haor.",
-        img: sreemangal
-    },
-    {
-        name: "SUNDARBANS",
-        description: "The Sundarbans is a mangrove area in the delta formed by the confluence of the Ganges, Brahmaputra and Meghna Rivers in the Bay of Bengal. It spans from the Hooghly River in India's state of West Bengal to the Baleswar River in Bangladesh",
-        img: sundarbans
-    },
-]
-
-function Item({item: {name, description, img}}) {
+function Item({item: {areaName, description, img}}) {
     const [sliderImage, setSliderImage] = useState([coxsBazar, sreemangal, sundarbans]);
     // useEffect executes when map img is changed and update state 
     useEffect(()=> {
@@ -41,11 +24,12 @@ function Item({item: {name, description, img}}) {
         <Container style={{ backgroundColor: 'transparent', color: 'white', marginTop: '100px' }}>
             <Row>
                 <Col style={{ maxWidth: '25%' }}>
-                    <h2>{name}</h2>
+                    <h2>{areaName}</h2>
                     <p>{description}</p>
                     <Button variant="warning" className="CheckButton font-weight-bold">
+                        <Link to={`/area/${areaName}`}>
                         Booking <ArrowRightAltIcon />
-                        <Redirect to={`/${name}`} />
+                        </Link>
                     </Button>
                 </Col>
                 <Col className="slider-right" style={{ width: '75%' }}>
@@ -62,7 +46,7 @@ const Slider = () => {
     return (
         <Carousel>
             {
-                items.map((item, idx) => <Item key={idx} item={item} />)
+                areaData.map((item, idx) => <Item key={idx} item={item} />)
             }
         </Carousel>
     );

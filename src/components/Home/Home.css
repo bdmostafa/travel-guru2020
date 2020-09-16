@@ -11,6 +11,7 @@
 
 .logo {
     width: 25%;
+    filter: brightness(999%)
 }
 
 .search-form .input-search {
