@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Header from '../Header/Header';
 import areaData from '../../DataStore/AreaData';
 import DatePicker from 'react-datepicker';
-import ControlLabel from 'react-datepicker';
 
-const AreaDetail = () => {
+const Booking = () => {
     const { areaName } = useParams();
     const selectedArea = areaData.find(area => area.areaName === areaName);
     const [startDate, setStartDate] = useState(new Date());
-    // const datePicker = () => {
-    //     const [startDate, setStartDate] = useState(new Date());
-    //     return (
-    //       <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-    //     );
-    //   };
 
     return (
         <div className="home-bg text-white">
@@ -31,11 +24,11 @@ const AreaDetail = () => {
                             <Form>
                                 <Form.Group>
                                     <Form.Label>Origin</Form.Label>
-                                    <Form.Control placeholder="Dhaka" />
+                                    <Form.Control placeholder="DHAKA" />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Destination</Form.Label>
-                                    <Form.Control placeholder="Cox's Bazar" />
+                                    <Form.Control placeholder={areaName} />
                                 </Form.Group>
                                 <Form.Row>
                                     <Form.Group as={Col}>
@@ -52,7 +45,9 @@ const AreaDetail = () => {
                                 </Form.Row>
 
                                 <Button className="w-100" variant="warning" type="submit">
-                                    Start Booking
+                                    <Link to={`/login`}>
+                                        Start Booking
+                                    </Link>
                                 </Button>
                             </Form>
                         </Col>
@@ -64,4 +59,4 @@ const AreaDetail = () => {
     );
 };
 
-export default AreaDetail;
+export default Booking;

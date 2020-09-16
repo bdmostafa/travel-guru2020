@@ -6,16 +6,13 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import AreaDetail from './components/AreaDetail/AreaDetail';
 import 'react-datepicker/dist/react-datepicker.css';
+import Booking from './components/Booking/Booking';
+import Login from './components/Login/Login';
 
 function App() {
   return (
-   
-     
-  
     <Router>
-    
       <Switch>
         <Route exact path="/">
         <Home />
@@ -24,7 +21,10 @@ function App() {
           <Home />
         </Route>
         <Route path="/area/:areaName">
-          <AreaDetail />
+          <Booking />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
       </Switch>
     
