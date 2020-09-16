@@ -19,7 +19,7 @@ const Header = () => {
                     <Nav.Link href="#link">Destination</Nav.Link>
                     <Nav.Link href="#link">Blog</Nav.Link>
                     <Nav.Link href="#link">Contact</Nav.Link>
-                    <Button className="login-btn" variant="warning">Login</Button>
+                    <Button className="login-btn font-weight-bold" variant="warning">Login</Button>
                 </Nav>
 
             </Navbar.Collapse>

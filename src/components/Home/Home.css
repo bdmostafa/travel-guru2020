@@ -22,3 +22,19 @@
     max-width: 15rem;
     font-weight: bold;
 }
+
+.slider-right {
+    max-width: 70%
+}
+
+.slider-right img {
+    width: 12rem;
+    height: 20rem;
+    border-radius: 2rem;
+    float: left;
+    margin-right: 30px;
+}
+
+.slider-right .active {
+    border: 7px solid yellow;
+}
