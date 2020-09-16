@@ -39,3 +39,15 @@
 .slider-right .active {
     border: 7px solid yellow;
 }
+
+.form-area {
+    background-color: white;
+    padding: 2rem;
+    border-radius: .5rem;
+    color: black;
+    max-height: 400px;
+}
+
+.form-area input {
+    background-color: #F2F2F2;
+}

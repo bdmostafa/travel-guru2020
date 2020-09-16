@@ -21,7 +21,7 @@ function Item({item: {areaName, description, img}}) {
     }, [img])
 
     return (
-        <Container style={{ backgroundColor: 'transparent', color: 'white', marginTop: '100px' }}>
+        <Container style={{ backgroundColor: 'transparent', color: 'white', marginTop: '30px' }}>
             <Row>
                 <Col style={{ maxWidth: '25%' }}>
                     <h2>{areaName}</h2>

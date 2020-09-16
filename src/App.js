@@ -4,11 +4,10 @@ import Home from './components/Home/Home';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import Area from './components/AreaDetail/AreaDetail';
 import AreaDetail from './components/AreaDetail/AreaDetail';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function App() {
   return (

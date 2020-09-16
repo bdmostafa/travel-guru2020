@@ -6,7 +6,7 @@ import logo from '../../images/Logo.png';
 const Header = () => {
 
     return (
-        <Navbar bg="none" expand="lg" variant="dark">
+        <Navbar bg="none" expand="lg" variant="dark" className="mb-5">
             <Navbar.Brand href="#home"> <img className="logo" src={logo} alt="" /> </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
