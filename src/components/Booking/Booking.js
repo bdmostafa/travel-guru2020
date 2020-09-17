@@ -9,6 +9,53 @@ const Booking = () => {
     const { areaName } = useParams();
     const selectedArea = areaData.find(area => area.areaName === areaName);
     const [startDate, setStartDate] = useState(new Date());
+    const [userDestinationData, setUserDestinationData] = useState({
+        isFieldValid: false,
+        origin: '',
+        destination: '',
+        startDate: '',
+        endDate: ''
+    });
+    const { isFieldValid, origin, destination } = userDestinationData;
+
+    // Booking state will be true when booking form is filled up
+    // const [isFormCompleted, setIsFormCompleted] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (origin && destination && startDate) {
+            setUserDestinationData.isFieldValid = true;
+            console.log(isFieldValid)
+        } else {
+            
+        }
+    }
+
+    // const showError = (e) => {
+    //     if (e) return 'text';
+    //     else return 'hidden';
+
+    // }
+console.log(isFieldValid)
+    const handleBlur = (e) => {
+
+        let isFieldValid = true;
+
+        if (e.target.value === '') {
+            isFieldValid = false;
+        }
+
+        if (e.target.name === 'startDate' || e.target.name === 'endDate') {
+            if (e.target.value === '') isFieldValid = false;
+        }
+
+        // Update UserDestinationData state
+        if (isFieldValid) {
+            const newUserDestinationInfo = { ...userDestinationData }
+            newUserDestinationInfo[e.target.name] = e.target.value;
+            setUserDestinationData(newUserDestinationInfo);
+        }
+    }
 
     return (
         <div className="home-bg text-white">
@@ -21,33 +68,62 @@ const Booking = () => {
                             <p>{selectedArea.longIntro}</p>
                         </Col>
                         <Col className="form-area ml-5">
+                            <input type="" value="Please Fill Up the form" />
                             <Form>
                                 <Form.Group>
                                     <Form.Label>Origin</Form.Label>
-                                    <Form.Control placeholder="DHAKA" required />
+                                    <Form.Control
+                                        name="origin"
+                                        onBlur={handleBlur}
+                                        placeholder="DHAKA"
+                                        required />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Destination</Form.Label>
-                                    <Form.Control placeholder={areaName} required />
+                                    <Form.Control
+                                        name="destination"
+                                        onBlur={handleBlur}
+                                        placeholder={areaName}
+                                        required />
                                 </Form.Group>
                                 <Form.Row>
                                     <Form.Group as={Col}>
                                         <Form.Label>From</Form.Label>
                                         <br />
-                                        <DatePicker className="form-control" selected={startDate} onChange={date => setStartDate(date)} />
+                                        <DatePicker
+                                            name="startDate"
+                                            onBlur={handleBlur}
+                                            className="form-control"
+                                            selected={startDate}
+                                            onChange={date => setStartDate(date)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
                                         <Form.Label>To</Form.Label>
                                         <br />
-                                        <DatePicker className="form-control mr-auto" selected={startDate} onChange={date => setStartDate(date)} />
+                                        <DatePicker
+                                            name="endDate"
+                                            onBlur={handleBlur}
+                                            className="form-control mr-auto"
+                                            selected={startDate}
+                                            onChange={date => setStartDate(date)} />
                                     </Form.Group>
                                 </Form.Row>
-                                <Link to={`/listings/${areaName}`}>
-                                    <Button className="w-100 mt-3" variant="warning" type="submit">
+                                <Button
+                                onClick={handleSubmit}
+                                    className="w-100 mt-3"
+                                    variant="warning"
+                                    type="submit">
+                                    <Link
+                                        to={isFieldValid
+                                            ? `/listings/${areaName}`
+                                            : `/area/${areaName}`
+                                        }
+                                    >
                                         Start Booking
-                                    </Button>
-                                </Link>
+                                    </Link>
+                                </Button>
+
                             </Form>
                         </Col>
                     </Row>
