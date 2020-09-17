@@ -9,7 +9,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 const Login = () => {
     const [newUser, setNewUser] = useState(true);
-    const [newPassword, setNewPassword] = useState('');
+    const [pass, setPass] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [user, setUser] = useState({
         isSignedIn: false,
         fName: '',
@@ -32,7 +33,7 @@ const Login = () => {
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
-
+    console.log(loggedInUser)
     const handleResponse = (res, redirect) => {
         setUser(res);
         setLoggedInUser(res);
@@ -59,27 +60,31 @@ const Login = () => {
     }
 
     const handleSubmit = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         console.log(email, password);
 
-        // For new user sign up / create account
-        if (newUser && email && password) {
-            createUserWithEmailAndPassword(fName, email, password)
-                .then(res => {
-                    console.log(res, from)
-                    handleResponse(res, true);
-                })
+        // Validation on confirm password
+        if (pass === confirmPassword) {
+            // For new user sign up / create account
+            if (newUser && email && password) {
+                createUserWithEmailAndPassword(fName, email, password)
+                    .then(res => {
+                        console.log(res)
+                        handleResponse(res, true);
+                    })
+            }
+
+            // For old users sign in / login
+            if (!newUser && email && password) {
+                signInWithEmailAndPassword(email, password)
+                    .then(res => {
+                        handleResponse(res, true);
+                    })
+            }
+        } else {
+            alert('Oops... Password not matched. Please try again.')
         }
 
-        // For old users sign in / login
-        if (!newUser && email && password) {
-            console.log('ok')
-            signInWithEmailAndPassword(email, password)
-                .then(res => {
-                    handleResponse(res, true);
-                })
-        }
-        e.preventDefault();
     }
 
     const handleBlur = (e) => {
@@ -94,16 +99,14 @@ const Login = () => {
         if (e.target.name === 'password') {
             const isPasswordValid = e.target.value.length > 6
             const hasNumber = /\d{1}/.test(e.target.value);
-            // setNewPassword(e.target.value);
+            setPass(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
         }
 
         if (e.target.name === 'cPassword') {
             const isPasswordValid = e.target.value.length > 6
             const hasNumber = /\d{1}/.test(e.target.value);
-            // setNewPassword(e.target.value);
-            // const isPasswordMatched = newPassword !== e.target.value;
-            // console.log(isPasswordMatched)
+            setConfirmPassword(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
         }
 

@@ -22,7 +22,7 @@ const Listings = () => {
     return (
         <div>
             <Container>
-                <Header2 user={loggedInUser.name} />
+                <Header2 user={loggedInUser.name || loggedInUser.email} />
                 <hr className="hr-header" />
                 <div className="d flex">
                     <p>176 stays Sep 19-25 guests</p>
