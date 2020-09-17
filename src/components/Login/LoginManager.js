@@ -14,16 +14,13 @@ export const handleGoogleSignIn = () => {
 
     return firebase.auth().signInWithPopup(googleProvider)
         .then(res => {
-            console.log(res)
             const { displayName, email } = res.user;
             const signedInUser = {
                 isSignedIn: true,
                 name: displayName,
                 email
             }
-            console.log('auth', res.user)
             return signedInUser;
-            // console.log(displayName, email, photoURL);
         })
         .catch(err => {
             console.log(err.message)
@@ -35,41 +32,21 @@ export const handleFBSignIn = () => {
 
     return firebase.auth().signInWithPopup(FBProvider)
         .then(res => {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = res.credential.accessToken;
-            // The signed-in user info.
-            var user = res.user;
-            console.log('fb user', user);
-            return user;
-        })
-        .catch(err => {
-            // var errorCode = err.code;
-            var errMessage = err.message;
-            // var email = err.email;
-            // The firebase.auth.AuthCredential type that was used.
-            // var credential = err.credential;
-            console.log(errMessage)
-        });
-}
-
-
-export const handleSignOut = () => {
-    return firebase.auth().signOut()
-        .then(() => {
-            const signedOutUser = {
-                isSignedIn: false,
-                name: '',
-                email: ''
+            const { displayName, email } = res.user;
+            const signedInUser = {
+                isSignedIn: true,
+                name: displayName,
+                email
             }
-            return signedOutUser;
+            return signedInUser;
         })
         .catch(err => {
             console.log(err.message)
-        })
+        });
 }
 
-
 export const createUserWithEmailAndPassword = (name, email, password) => {
+    console.log('ok')
     return firebase.auth().createUserWithEmailAndPassword( email, password)
     .then(res => {
         const newUserInfo = res.user;

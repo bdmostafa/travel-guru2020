@@ -8,20 +8,22 @@ import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const Login = () => {
-    const [newUser, setNewUser] = useState(false);
+    const [newUser, setNewUser] = useState(true);
     const [newPassword, setNewPassword] = useState('');
     const [user, setUser] = useState({
         isSignedIn: false,
-        name: '',
+        fName: '',
+        lName: '',
         email: '',
         password: '',
+        cPassword: '',
         error: '',
         success: false
     });
 
     // Destructuring user state
-    const { isSignedIn, name, email, password } = user;
-    console.log(user)
+    const { isSignedIn, fName, lName, email, password } = user;
+    // console.log(user)
 
     // Initialize firebase/login framework
     initLoginFramework();
@@ -52,30 +54,26 @@ const Login = () => {
             })
     }
 
-    // const signOut = () => {
-    //     handleSignOut()
-    //         .then(res => {
-    //             handleResponse(res, false);
-    //         })
-    // }
-
     const resetPassword = () => {
         console.log('password reset')
     }
 
     const handleSubmit = (e) => {
-        // console.log(user.email, user.password);
+        // e.preventDefault();
+        console.log(email, password);
 
-        // For new user
+        // For new user sign up / create account
         if (newUser && email && password) {
-            createUserWithEmailAndPassword(name, email, password)
+            createUserWithEmailAndPassword(fName, email, password)
                 .then(res => {
+                    console.log(res, from)
                     handleResponse(res, true);
                 })
         }
 
-        // For old users
+        // For old users sign in / login
         if (!newUser && email && password) {
+            console.log('ok')
             signInWithEmailAndPassword(email, password)
                 .then(res => {
                     handleResponse(res, true);
@@ -85,31 +83,28 @@ const Login = () => {
     }
 
     const handleBlur = (e) => {
-        // console.log(e.target.value)
         let isFieldValid = true;
-
+        console.log(e.target.name, e.target.value)
         // Email validation with Regex
         if (e.target.name === 'email') {
-            // isFieldValid = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(e.target.value)
             isFieldValid = /\S+@\S+\.\S+/.test(e.target.value)
-            // console.log(isFieldValid);
         }
 
         // Password validation with Regex
         if (e.target.name === 'password') {
             const isPasswordValid = e.target.value.length > 6
             const hasNumber = /\d{1}/.test(e.target.value);
-            setNewPassword(e.target.value);
+            // setNewPassword(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
         }
 
-        if (e.target.name === 'confirm_password') {
+        if (e.target.name === 'cPassword') {
             const isPasswordValid = e.target.value.length > 6
             const hasNumber = /\d{1}/.test(e.target.value);
-            setNewPassword(e.target.value);
-            const isPasswordMatched = newPassword !== e.target.value;
-            console.log(isPasswordMatched)
-            isFieldValid = isPasswordValid && hasNumber && isPasswordMatched;
+            // setNewPassword(e.target.value);
+            // const isPasswordMatched = newPassword !== e.target.value;
+            // console.log(isPasswordMatched)
+            isFieldValid = isPasswordValid && hasNumber;
         }
 
         // Update user state
@@ -117,6 +112,7 @@ const Login = () => {
             const newUserInfo = { ...user }
             newUserInfo[e.target.name] = e.target.value;
             setUser(newUserInfo)
+            console.log(newUserInfo)
         }
 
     }
@@ -128,12 +124,37 @@ const Login = () => {
                 {
                     newUser
                         ? <>
-                            <h3>Login</h3>
+                            <h3>Create an account</h3>
                             <Form.Group>
-                                <Form.Control type="text" placeholder="Username or Email" />
+                                <Form.Control name="fName" type="text" placeholder="First Name" />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control name="lName" type="text" placeholder="Last Name" />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control onBlur={handleBlur} name="email" type="email" placeholder="Email" />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control onBlur={handleBlur} name="password" type="password" placeholder="Password" />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control onBlur={handleBlur} name="cPassword" type="password" placeholder="Confirm Password" />
+                            </Form.Group>
+                            <Button className="w-100" variant="warning" type="submit">
+                                Create an account
+                            </Button>
+                            <Form.Text className="text-muted text-center">
+                                Already have an account? <button onClick={() => setNewUser(!newUser)} style={{ border: 'none', background: 'none', color: 'orange' }}>Login</button>
+                            </Form.Text>
+                        </>
+                        :
+                        <>
+                            <h3>Login</h3>
+                            <Form.Group>
+                                <Form.Control onBlur={handleBlur} type="text" name="email" placeholder="Username or Email" />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control onBlur={handleBlur} type="password" name="password" placeholder="Password" />
                             </Form.Group>
                             <Form.Row>
                                 <Form.Group as={Col}>
@@ -147,34 +168,9 @@ const Login = () => {
                             </Form.Row>
                             <Button className="w-100" variant="warning" type="submit">
                                 Login
-                        </Button>
+                            </Button>
                             <Form.Text className="text-muted text-center">
                                 Don't have an account? <button onClick={() => setNewUser(!newUser)} style={{ border: 'none', background: 'none', color: 'orange' }}>Create an account</button>
-                            </Form.Text>
-                        </>
-                        :
-                        <>
-                            <h3>Create an account</h3>
-                            <Form.Group>
-                                <Form.Control type="text" placeholder="First Name" />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Control type="text" placeholder="Last Name" />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Control onBlur={handleBlur} type="email" placeholder="Email" />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Control onBlur={handleBlur} name="password" type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Control onBlur={handleBlur} name="confirm_password" type="password" placeholder="Confirm Password" />
-                            </Form.Group>
-                            <Button className="w-100" variant="warning" type="submit">
-                                Create an account
-                        </Button>
-                            <Form.Text className="text-muted text-center">
-                                Already have an account? <button onClick={() => setNewUser(!newUser)} style={{ border: 'none', background: 'none', color: 'orange' }}>Login</button>
                             </Form.Text>
                         </>
                 }

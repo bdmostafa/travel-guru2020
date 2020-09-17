@@ -10,52 +10,50 @@ const Booking = () => {
     const selectedArea = areaData.find(area => area.areaName === areaName);
     const [startDate, setStartDate] = useState(new Date());
     const [userDestinationData, setUserDestinationData] = useState({
-        isFieldValid: false,
         origin: '',
         destination: '',
         startDate: '',
         endDate: ''
     });
-    const { isFieldValid, origin, destination } = userDestinationData;
+    // const { origin, destination } = userDestinationData;
 
     // Booking state will be true when booking form is filled up
     // const [isFormCompleted, setIsFormCompleted] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (origin && destination && startDate) {
-            setUserDestinationData.isFieldValid = true;
-            console.log(isFieldValid)
-        } else {
-            
-        }
-    }
+    // const handleSubmit = (e) => {
+    //     if (origin && destination && startDate) {
+    //         console.log('ok')
+    //         const form = { ...userDestinationData }
+    //         form[isFieldValid] = true;
+    //         console.log(isFieldValid)
+    //     }
+    // }
 
     // const showError = (e) => {
     //     if (e) return 'text';
     //     else return 'hidden';
 
     // }
-console.log(isFieldValid)
-    const handleBlur = (e) => {
+// console.log(isFieldValid)
+//     const handleBlur = (e) => {
 
-        let isFieldValid = true;
+//         let isFieldValid = true;
 
-        if (e.target.value === '') {
-            isFieldValid = false;
-        }
+//         if (e.target.value === '') {
+//             isFieldValid = false;
+//         }
 
-        if (e.target.name === 'startDate' || e.target.name === 'endDate') {
-            if (e.target.value === '') isFieldValid = false;
-        }
+//         if (e.target.name === 'startDate' || e.target.name === 'endDate') {
+//             if (e.target.value === '') isFieldValid = false;
+//         }
 
-        // Update UserDestinationData state
-        if (isFieldValid) {
-            const newUserDestinationInfo = { ...userDestinationData }
-            newUserDestinationInfo[e.target.name] = e.target.value;
-            setUserDestinationData(newUserDestinationInfo);
-        }
-    }
+//         // Update UserDestinationData state
+//         if (isFieldValid) {
+//             const newUserDestinationInfo = { ...userDestinationData }
+//             newUserDestinationInfo[e.target.name] = e.target.value;
+//             setUserDestinationData(newUserDestinationInfo);
+//         }
+//     }
 
     return (
         <div className="home-bg text-white">
@@ -68,13 +66,11 @@ console.log(isFieldValid)
                             <p>{selectedArea.longIntro}</p>
                         </Col>
                         <Col className="form-area ml-5">
-                            <input type="" value="Please Fill Up the form" />
                             <Form>
                                 <Form.Group>
                                     <Form.Label>Origin</Form.Label>
                                     <Form.Control
                                         name="origin"
-                                        onBlur={handleBlur}
                                         placeholder="DHAKA"
                                         required />
                                 </Form.Group>
@@ -82,8 +78,8 @@ console.log(isFieldValid)
                                     <Form.Label>Destination</Form.Label>
                                     <Form.Control
                                         name="destination"
-                                        onBlur={handleBlur}
                                         placeholder={areaName}
+                                        defaultValue={areaName}
                                         required />
                                 </Form.Group>
                                 <Form.Row>
@@ -92,10 +88,11 @@ console.log(isFieldValid)
                                         <br />
                                         <DatePicker
                                             name="startDate"
-                                            onBlur={handleBlur}
                                             className="form-control"
                                             selected={startDate}
-                                            onChange={date => setStartDate(date)} />
+                                            onChange={date => setStartDate(date)}
+                                            required
+                                        />
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
@@ -103,27 +100,21 @@ console.log(isFieldValid)
                                         <br />
                                         <DatePicker
                                             name="endDate"
-                                            onBlur={handleBlur}
                                             className="form-control mr-auto"
                                             selected={startDate}
-                                            onChange={date => setStartDate(date)} />
+                                            onChange={date => setStartDate(date)}
+                                            required 
+                                        />
                                     </Form.Group>
                                 </Form.Row>
-                                <Button
-                                onClick={handleSubmit}
-                                    className="w-100 mt-3"
-                                    variant="warning"
-                                    type="submit">
-                                    <Link
-                                        to={isFieldValid
-                                            ? `/listings/${areaName}`
-                                            : `/area/${areaName}`
-                                        }
-                                    >
-                                        Start Booking
-                                    </Link>
-                                </Button>
-
+                                <Link to={`/listings/${areaName}`}>
+                                    <Button
+                                        className="w-100 mt-3"
+                                        variant="warning"
+                                        type="submit">
+                                            Start Booking
+                                    </Button>
+                                </Link>
                             </Form>
                         </Col>
                     </Row>
