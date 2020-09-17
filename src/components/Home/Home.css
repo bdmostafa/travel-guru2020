@@ -85,3 +85,13 @@
 .signin-btn button FacebookIcon {
     color: blue
 }
+
+.hr-header {
+    margin-top: -3rem;
+}
+
+.reset-password-btn {
+    border: none;
+    background: none;
+    color: orange;
+}
