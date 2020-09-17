@@ -8,7 +8,7 @@ const Header = () => {
 
     return (
         <Navbar bg="none" expand="lg" variant="dark" className="mb-5">
-            <Navbar.Brand href="#home">
+            <Navbar.Brand >
                 <Link to={`/home`}>
                     <img className="w-25" src={logo} alt="" />
                 </Link>
@@ -20,10 +20,10 @@ const Header = () => {
                     {/* <SearchIcon /> */}
                 </Form>
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">News</Nav.Link>
-                    <Nav.Link href="#link">Destination</Nav.Link>
-                    <Nav.Link href="#link">Blog</Nav.Link>
-                    <Nav.Link href="#link">Contact</Nav.Link>
+                    <Nav.Link>News</Nav.Link>
+                    <Nav.Link>Destination</Nav.Link>
+                    <Nav.Link>Blog</Nav.Link>
+                    <Nav.Link>Contact</Nav.Link>
                     <Button className="login-btn font-weight-bold" variant="warning">
                         <Link to={`/login`}>
                             Login

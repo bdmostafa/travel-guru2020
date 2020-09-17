@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Booking from './components/Booking/Booking';
 import Login from './components/Login/Login';
 import Listings from './components/Listings/Listings';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export const UserContext = createContext();
 
@@ -31,9 +32,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/listings">
+          <PrivateRoute path="/listings/:areaName">
             <Listings />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
     </UserContext.Provider>

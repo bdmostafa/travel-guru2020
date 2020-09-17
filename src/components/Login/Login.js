@@ -21,7 +21,7 @@ const Login = () => {
 
     // Destructuring user state
     const { isSignedIn, name, email, password } = user;
-    // console.log(isSignedIn)
+    console.log(user)
 
     // Initialize firebase/login framework
     initLoginFramework();
@@ -34,7 +34,6 @@ const Login = () => {
     const handleResponse = (res, redirect) => {
         setUser(res);
         setLoggedInUser(res);
-        console.log(res)
         // Redirect when signed in
         if (redirect) history.replace(from);
     }

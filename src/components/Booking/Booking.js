@@ -45,7 +45,7 @@ const Booking = () => {
                                 </Form.Row>
 
                                 <Button className="w-100" variant="warning" type="submit">
-                                    <Link to={`/login`}>
+                                    <Link to={`/listings/${areaName}`}>
                                         Start Booking
                                     </Link>
                                 </Button>
