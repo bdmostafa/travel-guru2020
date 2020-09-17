@@ -24,11 +24,11 @@ const Booking = () => {
                             <Form>
                                 <Form.Group>
                                     <Form.Label>Origin</Form.Label>
-                                    <Form.Control placeholder="DHAKA" />
+                                    <Form.Control placeholder="DHAKA" required />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Destination</Form.Label>
-                                    <Form.Control placeholder={areaName} />
+                                    <Form.Control placeholder={areaName} required />
                                 </Form.Group>
                                 <Form.Row>
                                     <Form.Group as={Col}>
@@ -43,12 +43,11 @@ const Booking = () => {
                                         <DatePicker className="form-control mr-auto" selected={startDate} onChange={date => setStartDate(date)} />
                                     </Form.Group>
                                 </Form.Row>
-
-                                <Button className="w-100" variant="warning" type="submit">
-                                    <Link to={`/listings/${areaName}`}>
+                                <Link to={`/listings/${areaName}`}>
+                                    <Button className="w-100 mt-3" variant="warning" type="submit">
                                         Start Booking
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </Form>
                         </Col>
                     </Row>

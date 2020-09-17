@@ -9,8 +9,8 @@ const Header = () => {
     return (
         <Navbar bg="none" expand="lg" variant="dark" className="mb-5">
             <Navbar.Brand >
-                <Link to={`/home`}>
-                    <img className="w-25" src={logo} alt="" />
+                <Link to='/home'>
+                    <img className="w-25 logo-bg" src={logo} alt="" />
                 </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -24,11 +24,11 @@ const Header = () => {
                     <Nav.Link>Destination</Nav.Link>
                     <Nav.Link>Blog</Nav.Link>
                     <Nav.Link>Contact</Nav.Link>
-                    <Button className="login-btn font-weight-bold" variant="warning">
-                        <Link to={`/login`}>
+                    <Link to='/login'>
+                        <Button className="login-btn font-weight-bold" variant="warning">
                             Login
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </Nav>
 
             </Navbar.Collapse>

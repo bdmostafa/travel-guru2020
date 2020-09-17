@@ -4,11 +4,10 @@ import logo from '../../images/Logo.png';
 import { Link } from 'react-router-dom';
 
 const Header2 = ({ user }) => {
-    console.log(user)
     return (
         <Navbar bg="white" expand="lg" variant="light" className="mb-5">
             <Navbar.Brand>
-                <Link to={`/home`}>
+                <Link to='/home'>
                     <img className="w-25" src={logo} alt="" />
                 </Link>
             </Navbar.Brand>
@@ -21,12 +20,13 @@ const Header2 = ({ user }) => {
                     <Nav.Link className="mr-3">Contact</Nav.Link>
                     {
                         user
-                            ? <strong style={{marginTop: '.5rem'}}>{user}</strong>
-                            : <Button className="login-btn font-weight-bold" variant="warning">
-                                <Link to={`/login`}>
+                            ? <strong style={{ marginTop: '.5rem' }}>{user}</strong>
+                            : <Link to='/login'>
+                                <Button className="login-btn font-weight-bold" variant="warning">
                                     Login
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
+
                     }
 
                 </Nav>

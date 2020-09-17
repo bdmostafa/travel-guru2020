@@ -8,14 +8,14 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { Link } from 'react-router-dom';
 import areaData from '../../DataStore/AreaData';
 
-function Item({item: {areaName, description, img}}) {
+function Item({ item: { areaName, description, img } }) {
     const [sliderImage, setSliderImage] = useState([coxsBazar, sreemangal, sundarbans]);
     // useEffect executes when map img is changed and update state 
-    useEffect(()=> {
-        if(img === sreemangal) {
-            setSliderImage([ sreemangal, coxsBazar, sundarbans])
+    useEffect(() => {
+        if (img === sreemangal) {
+            setSliderImage([sreemangal, coxsBazar, sundarbans])
         }
-        if(img === sundarbans) {
+        if (img === sundarbans) {
             setSliderImage([sundarbans, sreemangal, coxsBazar])
         }
     }, [img])
@@ -23,14 +23,14 @@ function Item({item: {areaName, description, img}}) {
     return (
         <Container style={{ backgroundColor: 'transparent', color: 'white', marginTop: '30px' }}>
             <Row>
-                <Col style={{ maxWidth: '25%' }}>
+                <Col style={{ maxWidth: '25%', marginLeft: '3rem' }}>
                     <h2>{areaName}</h2>
                     <p>{description}</p>
-                    <Button variant="warning" className="CheckButton font-weight-bold">
-                        <Link to={`/area/${areaName}`}>
-                        Booking <ArrowRightAltIcon />
-                        </Link>
-                    </Button>
+                    <Link to={`/area/${areaName}`}>
+                        <Button variant="warning" className="CheckButton font-weight-bold">
+                            Booking <ArrowRightAltIcon />
+                        </Button>
+                    </Link>
                 </Col>
                 <Col className="slider-right" style={{ width: '75%' }}>
                     <img className="active" src={sliderImage[0]} alt="" />
