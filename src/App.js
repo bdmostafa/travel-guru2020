@@ -11,6 +11,7 @@ import Booking from './components/Booking/Booking';
 import Login from './components/Login/Login';
 import Listings from './components/Listings/Listings';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Footer from './components/Footer/Footer';
 
 export const UserContext = createContext();
 
@@ -46,6 +47,7 @@ function App() {
             <Listings />
           </PrivateRoute>
         </Switch>
+        <Footer />
       </Router>
     </UserContext.Provider>
   );
