@@ -9,8 +9,9 @@ import { UserContext } from '../../App';
 const Booking = () => {
     const { areaName } = useParams();
     const selectedArea = areaData.find(area => area.areaName === areaName);
-    // Get user name to pass as props on Header component when signed in
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    // Get data from context API
+    const {loggedUser} = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = loggedUser;
     // Get todays date as a starting date
     const [startDate, setStartDate] = useState(new Date());
     // Set state 3 days as a default duraction value
@@ -19,58 +20,12 @@ const Booking = () => {
         const duration = 3;
         return today.setDate(today.getDate() + duration)
     });
-    const [userDestinationData, setUserDestinationData] = useState({
-        origin: '',
-        destination: '',
-        startDate: '',
-        endDate: ''
-    });
-
-    // const { origin, destination } = userDestinationData;
-
-    // Booking state will be true when booking form is filled up
-    // const [isFormCompleted, setIsFormCompleted] = useState(false);
-
-    // const handleSubmit = (e) => {
-    //     if (origin && destination && startDate) {
-    //         console.log('ok')
-    //         const form = { ...userDestinationData }
-    //         form[isFieldValid] = true;
-    //         console.log(isFieldValid)
-    //     }
-    // }
-
-    // const showError = (e) => {
-    //     if (e) return 'text';
-    //     else return 'hidden';
-
-    // }
-    // console.log(isFieldValid)
-    //     const handleBlur = (e) => {
-
-    //         let isFieldValid = true;
-
-    //         if (e.target.value === '') {
-    //             isFieldValid = false;
-    //         }
-
-    //         if (e.target.name === 'startDate' || e.target.name === 'endDate') {
-    //             if (e.target.value === '') isFieldValid = false;
-    //         }
-
-    //         // Update UserDestinationData state
-    //         if (isFieldValid) {
-    //             const newUserDestinationInfo = { ...userDestinationData }
-    //             newUserDestinationInfo[e.target.name] = e.target.value;
-    //             setUserDestinationData(newUserDestinationInfo);
-    //         }
-    //     }
 
     return (
         <div className="home-bg text-white">
             <div className="card-overlay">
                 <Container>
-                    <Header user={loggedInUser.name || loggedInUser.email} />
+                    <Header currentUser={loggedInUser.name || loggedInUser.email} />
                     <Row>
                         <Col className="mr-5">
                             <h2>{selectedArea.areaName}</h2>
@@ -83,6 +38,7 @@ const Booking = () => {
                                     <Form.Control
                                         name="origin"
                                         placeholder="DHAKA"
+                                        defaultValue=""
                                         required />
                                 </Form.Group>
                                 <Form.Group>

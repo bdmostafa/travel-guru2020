@@ -3,7 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 const PrivateRoute = ({ children, ...rest }) => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const {loggedUser} = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = loggedUser;
     // Executes children components when loggedInUser email or name (some FB account have only name) is found
     return (
         <Route

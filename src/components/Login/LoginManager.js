@@ -110,11 +110,21 @@ const verifyEmail = () => {
 
 export const resetPassword = email => {
     const auth = firebase.auth();
-
     return auth.sendPasswordResetEmail(email)
-    .then(() => {
-      // Email sent.
-    }).catch((err) => {
-      // An error happened.
-    });
+}
+
+export const handleSignOut = () => {
+    return firebase.auth().signOut()
+      .then(res => {
+        const signedOutUser = {
+          isSignedIn: false,
+          name: '',
+          email: '',
+          photoURL: ''
+        }
+        return signedOutUser
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
   }

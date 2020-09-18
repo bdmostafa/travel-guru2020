@@ -13,7 +13,9 @@ import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 
 const Listings = () => {
     // Get user name to pass as props on Header2 component when signed in
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const {loggedUser} = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = loggedUser;
+
     const { areaName } = useParams();
 
     // Filter specific area from listings data store that a user intends to stay in
@@ -21,7 +23,7 @@ const Listings = () => {
     // console.log(loggedInUser)
     return (
         <Container>
-            <Header2 user={loggedInUser.name || loggedInUser.email} />
+            <Header2 currentUser={loggedInUser.name || loggedInUser.email} />
             <hr className="hr-header" />
             <div className="d flex">
                 <p>176 stays Sep 19-25 guests</p>

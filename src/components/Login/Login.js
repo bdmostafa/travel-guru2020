@@ -8,26 +8,20 @@ import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const Login = () => {
+    // Get data from context API
+    const { loggedUser, userState } = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = loggedUser;
+    const [user, setUser] = userState;
+
+    // Other state
     const [newUser, setNewUser] = useState(true);
     const [pass, setPass] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [errorFirebase, setErrorFirebase] = useState(false);
+    const [errorFirebase, setErrorFirebase] = useState('');
     const [verifyMsg, setVerifyMsg] = useState(false);
     const [resetPasswordForm, setResetPasswordForm] = useState(false);
-    const [user, setUser] = useState({
-        isSignedIn: false,
-        fName: '',
-        lName: '',
-        email: '',
-        password: '',
-        cPassword: '',
-        error: '',
-        success: false
-    });
-
-    // Destructuring user state
-    const { fName, email, password, error, success } = user;
+    const [isResetLink, setIsResetLink] = useState(false);
 
     // State for user login input data
     const [loginUser, setLoginUser] = useState({
@@ -36,16 +30,16 @@ const Login = () => {
     });
     const { userEmail, userPassword } = loginUser;
 
+    // Destructuring user state
+    const { fName, email, password, success } = user;
+
     // useEffect(()=> {
     //     setErrorFirebase(error);
     // }, [user])
 
-
-
     // Initialize firebase/login framework
     initLoginFramework();
 
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
@@ -53,13 +47,12 @@ const Login = () => {
     // console.log(loggedInUser)
 
     const handleResponse = (res, redirect) => {
+        setErrorFirebase(res.error);
         setUser(res);
         setLoggedInUser(res);
-        if (res.error !== '') setErrorFirebase(true);
+        // console.log(res.error)
         // Redirect when signed in
         if (redirect) history.replace(from);
-        // console.log(user)
-        // console.log(loggedInUser)
     }
     // console.log(loggedInUser)
 
@@ -79,7 +72,6 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(email, password);
 
         // Validation on confirm password
         if (pass === confirmPassword) {
@@ -100,17 +92,18 @@ const Login = () => {
 
         // For old users sign in / login
         if (!newUser && userEmail && userPassword) {
-            signInWithEmailAndPassword(email, password)
+            console.log(userEmail, userPassword)
+            signInWithEmailAndPassword(userEmail, userPassword)
                 .then(res => {
-                    console.log(res.error)
                     handleResponse(res, true);
                 })
         }
 
         // Reset Password for old user
         if (!newUser && userEmail && !userPassword) {
+            
             resetPassword(userEmail)
-                .then(res => console.log('ok'))
+                .then(() => setIsResetLink(true))
         }
 
     }
@@ -155,25 +148,6 @@ const Login = () => {
             }
         }
 
-        // // Validation on userEmail when user login
-        // if (e.target.name === 'userEmail') {
-        //     isFieldValid = /\S+@\S+\.\S+/.test(e.target.value)
-        //     if (!isFieldValid) {
-        //         handleError('Please enter a valid email.', 3000)
-        //     }
-        // }
-
-        // // Validation on userPassword when user login
-        // if (e.target.name === 'userPassword') {
-        //     const isPasswordValid = e.target.value.length > 6
-        //     const hasNumber = /\d{1}/.test(e.target.value);
-        //     setPass(e.target.value);
-        //     isFieldValid = isPasswordValid && hasNumber;
-        //     if (!isFieldValid) {
-        //         handleError('Password must be 1 char, 1 latter and 7 length', 3000)
-        //     }
-        // }
-
         // Update user state
         if (isFieldValid) {
             const newUserInfo = { ...user }
@@ -189,30 +163,24 @@ const Login = () => {
         }
 
     }
-    console.log(errorFirebase)
+
     return (
         <Container>
             <Header2 />
-            {
-                errorFirebase
-                &&
-                <Form.Group>
-                    <Button className="w-100" variant="outline-danger"> {error} </Button>
-                </Form.Group>
-            }
             <Form className="login-form" onSubmit={handleSubmit}>
+                {
+                    errorFirebase
+                    &&
+                    <Form.Group>
+                        <Button className="w-100" variant="outline-danger"> {errorFirebase} </Button>
+                    </Form.Group>
+                }
                 {
                     errorMessage !== ''
                     && <Form.Group>
                         <Button className="w-100" variant="outline-danger"> {errorMessage} </Button>
                     </Form.Group>
                 }
-                {/* <p style={{ color: 'red' }}> {error} </p> */}
-                {
-                    success
-                    && <p style={{ color: 'green' }}> User  {newUser ? 'created' : 'logged in'} successfully. </p>
-                }
-
                 {
                     newUser
                         ? <>
@@ -240,9 +208,15 @@ const Login = () => {
                             </Form.Text>
                         </>
                         :
-                        !resetPasswordForm
+                        !resetPasswordForm || isResetLink
                             ?
                             <>
+                                {
+                                    isResetLink
+                                    && <Form.Group>
+                                        <Button className="w-100" variant="outline-danger"> Password reset link is sent to your mail. Please check your email </Button>
+                                    </Form.Group>
+                                }
                                 <h3>Login</h3>
                                 <Form.Group>
                                     <Form.Control onBlur={handleBlur} type="text" name="userEmail" placeholder="Username or Email" />
