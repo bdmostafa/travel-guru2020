@@ -46,9 +46,10 @@ const Login = () => {
         setLoggedInUser(res);
         // Redirect when signed in
         if (redirect) history.replace(from);
-        console.log(user)
-        console.log(loggedInUser)
+        // console.log(user)
+        // console.log(loggedInUser)
     }
+    // console.log(loggedInUser)
 
     const googleSignIn = () => {
         handleGoogleSignIn()
@@ -78,6 +79,7 @@ const Login = () => {
             if (newUser && email && password) {
                 createUserWithEmailAndPassword(fName, email, password)
                     .then(res => {
+                        // console.log(res)
                         handleResponse(res, true);
                     })
             }
@@ -90,12 +92,17 @@ const Login = () => {
                     })
             }
         } else {
-            setErrorMessage('Oops!..Password not matched. Please try again');
-            setInterval(()=> {
-                setErrorMessage('');
-            }, 30000)
+            handleError('Oops!..Password not matched. Please try again')
         }
 
+    }
+
+    const handleError = (msg, duraction) => {
+        setErrorMessage(msg);
+        // Disable message button after 3 seconds automatically
+        setInterval(()=> {
+            setErrorMessage('');
+        }, duraction)
     }
 
     const handleBlur = (e) => {
@@ -104,6 +111,9 @@ const Login = () => {
         // Email validation with Regex
         if (e.target.name === 'email') {
             isFieldValid = /\S+@\S+\.\S+/.test(e.target.value)
+            if (!isFieldValid) {
+                handleError('Please enter a valid email.', 3000)
+            }
         }
 
         // Password validation with Regex
@@ -112,6 +122,9 @@ const Login = () => {
             const hasNumber = /\d{1}/.test(e.target.value);
             setPass(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
+            if (!isFieldValid) {
+                handleError('Password must be 1 char, 1 latter and 7 length', 3000)
+            }
         }
 
         if (e.target.name === 'cPassword') {
@@ -119,6 +132,9 @@ const Login = () => {
             const hasNumber = /\d{1}/.test(e.target.value);
             setConfirmPassword(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
+            if (pass !== confirmPassword) {
+                handleError('Oops...! Password is not matched. Continue trying', 4000)
+            }
         }
 
         // Update user state
@@ -126,7 +142,6 @@ const Login = () => {
             const newUserInfo = { ...user }
             newUserInfo[e.target.name] = e.target.value;
             setUser(newUserInfo)
-            // console.log(newUserInfo)
         }
 
     }
@@ -141,11 +156,11 @@ const Login = () => {
                         <Button className="w-100" variant="outline-danger"> {errorMessage} </Button>
                     </Form.Group>
                 }
-                <p style={{ color: 'red' }}> {error} </p>
+                {/* <p style={{ color: 'red' }}> {error} </p>
                 {
                     success
                     && <p style={{ color: 'green' }}> User  {newUser ? 'created' : 'logged in'} successfully. </p>
-                }
+                } */}
                 {
                     newUser
                         ? <>

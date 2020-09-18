@@ -18,10 +18,10 @@ const Listings = () => {
 
     // Filter specific area from listings data store that a user intends to stay in
     const filteredSuites = suitesData.filter(suite => suite.area === areaName);
-
+    // console.log(loggedInUser)
     return (
         <Container>
-            <Header2 user={loggedInUser.name || loggedInUser.fName || loggedInUser.email} />
+            <Header2 user={loggedInUser.name || loggedInUser.email} />
             <hr className="hr-header" />
             <div className="d flex">
                 <p>176 stays Sep 19-25 guests</p>

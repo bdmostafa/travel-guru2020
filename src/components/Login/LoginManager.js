@@ -53,8 +53,19 @@ export const createUserWithEmailAndPassword = (name, email, password) => {
             newUserInfo.error = '';
             newUserInfo.success = true;
             updateUserName(name);
-            // console.log(newUserInfo)
             return newUserInfo;
+
+            // updateUserName(name);
+            // const { displayName, email } = res.user;
+            // const newUserInfo = {
+            //     isSignedIn: true,
+            //     name: displayName,
+            //     email,
+            //     error: '',
+            //     success: true
+            // }
+            // console.log(res.user)
+            
         })
         .catch(error => {
             const newUserInfo = {};
@@ -85,7 +96,7 @@ const updateUserName = name => {
 
     user.updateProfile({ displayName: name })
         .then(() => {
-            console.log('updated')
+            console.log('Name Updated')
         }).catch(err => {
             console.log(err)
         });
