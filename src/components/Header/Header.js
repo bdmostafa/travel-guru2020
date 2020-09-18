@@ -6,8 +6,19 @@ import { UserContext } from '../../App';
 import { handleSignOut } from '../Login/LoginManager';
 
 const Header = ({ currentUser }) => {
-    const {userState} = useContext(UserContext);
+    const {loggedUser, userState} = useContext(UserContext);
     const [user, setUser] = userState;
+    const [loggedInUser, setLoggedInUser] = loggedUser;
+
+    const signOut = () => {
+        handleSignOut()
+        .then(res => {
+            setUser(res);
+            setLoggedInUser(res);
+        })
+    }
+
+
     return (
         <Navbar bg="none" expand="lg" variant="dark" className="mb-5">
             <Navbar.Brand className="w-25">
@@ -35,7 +46,7 @@ const Header = ({ currentUser }) => {
                             ? <>
                                 <strong style={{ marginTop: '.5rem', color: 'white' }}>{currentUser}</strong>
                                 <Link to='/'>
-                                    <Button onClick={() => setUser(handleSignOut)} className="login-btn font-weight-bold" variant="warning">
+                                    <Button onClick={() => signOut()} className="login-btn font-weight-bold" variant="warning">
                                         Sign Out
                                     </Button>
                                 </Link>

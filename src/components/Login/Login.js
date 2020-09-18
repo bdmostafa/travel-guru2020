@@ -3,7 +3,7 @@ import { Form, Button, Container, Col } from 'react-bootstrap';
 import Header2 from '../Header/Header2';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import { initLoginFramework, handleGoogleSignIn, handleFBSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword, resetPassword } from './LoginManager';
+import { initLoginFramework, handleGoogleSignIn, handleFBSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword, resetPassword, handleSignOut } from './LoginManager';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -69,6 +69,8 @@ const Login = () => {
                 handleResponse(res, true);
             })
     }
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();

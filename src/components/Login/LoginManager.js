@@ -55,18 +55,6 @@ export const createUserWithEmailAndPassword = (name, email, password) => {
             updateUserName(name);
             verifyEmail();
             return newUserInfo;
-
-            // updateUserName(name);
-            // const { displayName, email } = res.user;
-            // const newUserInfo = {
-            //     isSignedIn: true,
-            //     name: displayName,
-            //     email,
-            //     error: '',
-            //     success: true
-            // }
-            // console.log(res.user)
-
         })
         .catch(error => {
             const newUserInfo = {};
@@ -119,8 +107,8 @@ export const handleSignOut = () => {
         const signedOutUser = {
           isSignedIn: false,
           name: '',
-          email: '',
-          photoURL: ''
+          fName: '',
+          email: ''
         }
         return signedOutUser
       })
