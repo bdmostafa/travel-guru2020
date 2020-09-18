@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Button, Container, Col } from 'react-bootstrap';
 import Header2 from '../Header/Header2';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -11,6 +11,7 @@ const Login = () => {
     const [newUser, setNewUser] = useState(true);
     const [pass, setPass] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [user, setUser] = useState({
         isSignedIn: false,
         fName: '',
@@ -21,6 +22,10 @@ const Login = () => {
         error: '',
         success: false
     });
+
+    useEffect(()=> {
+
+    }, [errorMessage])
 
     // Destructuring user state
     const { isSignedIn, fName, lName, email, password, error, success } = user;
@@ -35,12 +40,14 @@ const Login = () => {
     const { from } = location.state || { from: { pathname: "/" } };
 
     // console.log(loggedInUser)
-    
+
     const handleResponse = (res, redirect) => {
         setUser(res);
         setLoggedInUser(res);
         // Redirect when signed in
         if (redirect) history.replace(from);
+        console.log(user)
+        console.log(loggedInUser)
     }
 
     const googleSignIn = () => {
@@ -63,7 +70,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        // console.log(email, password);
 
         // Validation on confirm password
         if (pass === confirmPassword) {
@@ -71,7 +78,6 @@ const Login = () => {
             if (newUser && email && password) {
                 createUserWithEmailAndPassword(fName, email, password)
                     .then(res => {
-                        console.log(res)
                         handleResponse(res, true);
                     })
             }
@@ -84,14 +90,17 @@ const Login = () => {
                     })
             }
         } else {
-            // alert('Oops... Password not matched. Please try again.')
+            setErrorMessage('Oops!..Password not matched. Please try again');
+            setInterval(()=> {
+                setErrorMessage('');
+            }, 30000)
         }
 
     }
 
     const handleBlur = (e) => {
         let isFieldValid = true;
-        console.log(e.target.name, e.target.value)
+        // console.log(e.target.name, e.target.value)
         // Email validation with Regex
         if (e.target.name === 'email') {
             isFieldValid = /\S+@\S+\.\S+/.test(e.target.value)
@@ -117,7 +126,7 @@ const Login = () => {
             const newUserInfo = { ...user }
             newUserInfo[e.target.name] = e.target.value;
             setUser(newUserInfo)
-            console.log(newUserInfo)
+            // console.log(newUserInfo)
         }
 
     }
@@ -126,20 +135,26 @@ const Login = () => {
         <Container>
             <Header2 />
             <Form className="login-form" onSubmit={handleSubmit}>
+                {
+                    errorMessage !== ''
+                    && <Form.Group>
+                        <Button className="w-100" variant="outline-danger"> {errorMessage} </Button>
+                    </Form.Group>
+                }
                 <p style={{ color: 'red' }}> {error} </p>
                 {
                     success
-                        && <p style={{ color: 'green' }}> User  {newUser ? 'created' : 'logged in'} successfully. </p>
+                    && <p style={{ color: 'green' }}> User  {newUser ? 'created' : 'logged in'} successfully. </p>
                 }
                 {
                     newUser
                         ? <>
                             <h3>Create an account</h3>
                             <Form.Group>
-                                <Form.Control name="fName" type="text" placeholder="First Name" />
+                                <Form.Control onBlur={handleBlur} name="fName" type="text" placeholder="First Name" />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Control name="lName" type="text" placeholder="Last Name" />
+                                <Form.Control onBlur={handleBlur} name="lName" type="text" placeholder="Last Name" />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Control onBlur={handleBlur} name="email" type="email" placeholder="Email" />
