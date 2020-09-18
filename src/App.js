@@ -16,7 +16,9 @@ import Footer from './components/Footer/Footer';
 export const UserContext = createContext();
 
 function App() {
+  // Global State for new user and loggedin user
   const [loggedInUser, setLoggedInUser] = useState({});
+  const [verifyMsg, setVerifyMsg] = useState(false);
   const [user, setUser] = useState({
     isSignedIn: false,
     fName: '',
@@ -27,8 +29,9 @@ function App() {
     error: '',
     success: false
 });
+
   return (
-    <UserContext.Provider value={{loggedUser: [loggedInUser, setLoggedInUser], userState: [user, setUser]}}>
+    <UserContext.Provider value={{loggedUser: [loggedInUser, setLoggedInUser], userState: [user, setUser], verifyLink: [verifyMsg, setVerifyMsg]}}>
       <Router>
         <Switch>
           <Route exact path="/">

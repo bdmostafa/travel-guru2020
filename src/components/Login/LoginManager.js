@@ -23,8 +23,8 @@ export const handleGoogleSignIn = () => {
             }
             return signedInUser;
         })
-        .catch(err => {
-            console.log(err.message)
+        .catch(() => { 
+
         })
 }
 
@@ -41,8 +41,8 @@ export const handleFBSignIn = () => {
             }
             return signedInUser;
         })
-        .catch(err => {
-            console.log(err.message)
+        .catch(() => {
+            
         });
 }
 
@@ -112,7 +112,7 @@ export const handleSignOut = () => {
         }
         return signedOutUser
       })
-      .catch(err => {
-        console.log(err.message)
+      .catch(() => {
+    
       })
   }

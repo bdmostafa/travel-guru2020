@@ -85,7 +85,6 @@ const Booking = () => {
                             </Form>
                         </Col>
                     </Row>
-
                 </Container>
             </div>
         </div>

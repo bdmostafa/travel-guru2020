@@ -12,15 +12,15 @@ import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 
 
 const Listings = () => {
-    // Get user name to pass as props on Header2 component when signed in
-    const {loggedUser} = useContext(UserContext);
+    // Get currentUser name to pass as props on Header2 component when signed in
+    const { loggedUser } = useContext(UserContext);
     const [loggedInUser, setLoggedInUser] = loggedUser;
 
     const { areaName } = useParams();
 
     // Filter specific area from listings data store that a user intends to stay in
     const filteredSuites = suitesData.filter(suite => suite.area === areaName);
-    // console.log(loggedInUser)
+
     return (
         <Container>
             <Header2 currentUser={loggedInUser.name || loggedInUser.email} />

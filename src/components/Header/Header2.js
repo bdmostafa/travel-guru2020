@@ -6,9 +6,10 @@ import { UserContext } from '../../App';
 import { handleSignOut } from '../Login/LoginManager';
 
 const Header2 = ({ currentUser }) => {
-    const {loggedUser, userState} = useContext(UserContext);
+    const {loggedUser, userState, verifyLink} = useContext(UserContext);
     const [user, setUser] = userState;
     const [loggedInUser, setLoggedInUser] = loggedUser;
+    const [verifyMsg, setVerifyMsg] = verifyLink;
 
     const signOut = () => {
         handleSignOut()
@@ -18,6 +19,7 @@ const Header2 = ({ currentUser }) => {
         })
     }
     return (
+        <>
         <Navbar bg="white" expand="lg" variant="light" className="mb-5">
             <Navbar.Brand>
                 <Link to='/home'>
@@ -46,12 +48,15 @@ const Header2 = ({ currentUser }) => {
                                     Login
                                 </Button>
                             </Link>
-
                     }
-
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
+        {
+            verifyMsg
+            && <Button className="w-100 mb-5" variant="outline-success"> Verification link is sent to your mail. Please check it out. Thanks! </Button>
+        }
+        </>
     );
 };
 

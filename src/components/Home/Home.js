@@ -6,9 +6,10 @@ import Slider from '../Slider/Slider';
 import { UserContext } from '../../App';
 
 const Home = () => {
-    // Get user name to pass as props on Header component when signed in
+    // Get currentUser name to pass as props on Header component when signed in
     const {loggedUser} = useContext(UserContext);
     const [loggedInUser, setLoggedInUser] = loggedUser;
+    
     return (
         <div className="home-bg text-white">
             <div className="card-overlay">

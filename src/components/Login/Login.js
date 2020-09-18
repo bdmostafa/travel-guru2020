@@ -3,15 +3,16 @@ import { Form, Button, Container, Col } from 'react-bootstrap';
 import Header2 from '../Header/Header2';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import { initLoginFramework, handleGoogleSignIn, handleFBSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword, resetPassword, handleSignOut } from './LoginManager';
+import { initLoginFramework, handleGoogleSignIn, handleFBSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword, resetPassword } from './LoginManager';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const Login = () => {
     // Get data from context API
-    const { loggedUser, userState } = useContext(UserContext);
+    const { loggedUser, userState, verifyLink } = useContext(UserContext);
     const [loggedInUser, setLoggedInUser] = loggedUser;
     const [user, setUser] = userState;
+    const [verifyMsg, setVerifyMsg] = verifyLink;
 
     // Other state
     const [newUser, setNewUser] = useState(true);
@@ -19,7 +20,6 @@ const Login = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [errorFirebase, setErrorFirebase] = useState('');
-    const [verifyMsg, setVerifyMsg] = useState(false);
     const [resetPasswordForm, setResetPasswordForm] = useState(false);
     const [isResetLink, setIsResetLink] = useState(false);
 
@@ -31,11 +31,7 @@ const Login = () => {
     const { userEmail, userPassword } = loginUser;
 
     // Destructuring user state
-    const { fName, email, password, success } = user;
-
-    // useEffect(()=> {
-    //     setErrorFirebase(error);
-    // }, [user])
+    const { fName, email, password } = user;
 
     // Initialize firebase/login framework
     initLoginFramework();
@@ -44,17 +40,13 @@ const Login = () => {
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
 
-    // console.log(loggedInUser)
-
     const handleResponse = (res, redirect) => {
         setErrorFirebase(res.error);
         setUser(res);
         setLoggedInUser(res);
-        // console.log(res.error)
         // Redirect when signed in
         if (redirect) history.replace(from);
     }
-    // console.log(loggedInUser)
 
     const googleSignIn = () => {
         handleGoogleSignIn()
@@ -70,8 +62,6 @@ const Login = () => {
             })
     }
 
-    
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -81,7 +71,6 @@ const Login = () => {
             if (newUser && email && password) {
                 createUserWithEmailAndPassword(fName, email, password)
                     .then(res => {
-                        // console.log(res)
                         handleResponse(res, true);
                         if (res.success) {
                             setVerifyMsg(true)
@@ -94,7 +83,6 @@ const Login = () => {
 
         // For old users sign in / login
         if (!newUser && userEmail && userPassword) {
-            console.log(userEmail, userPassword)
             signInWithEmailAndPassword(userEmail, userPassword)
                 .then(res => {
                     handleResponse(res, true);
@@ -120,7 +108,7 @@ const Login = () => {
 
     const handleBlur = (e) => {
         let isFieldValid = true;
-        // console.log(e.target.name, e.target.value)
+
         // Email validation with Regex
         if (e.target.name === 'email') {
             isFieldValid = /\S+@\S+\.\S+/.test(e.target.value)
@@ -146,7 +134,7 @@ const Login = () => {
             setConfirmPassword(e.target.value);
             isFieldValid = isPasswordValid && hasNumber;
             if (pass !== confirmPassword) {
-                handleError('Oops...! Password is not matched. Continue trying', 10000)
+                handleError('Oops...! Password is not matched. Continue trying', 3000)
             }
         }
 
