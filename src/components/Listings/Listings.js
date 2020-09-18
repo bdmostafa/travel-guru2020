@@ -20,50 +20,48 @@ const Listings = () => {
     const filteredSuites = suitesData.filter(suite => suite.area === areaName);
 
     return (
-        <div>
-            <Container>
-                <Header2 user={loggedInUser.name || loggedInUser.email} />
-                <hr className="hr-header" />
-                <div className="d flex">
-                    <p>176 stays Sep 19-25 guests</p>
-                    <h4 className="font-weight-bold">Stay in {areaName}</h4>
-                </div>
-                <Row>
-                    <Col className="w-50" >
-                        {
-                            filteredSuites.map(suite =>
-                                <Row key={suite.id}>
-                                    <Col className="w-50" md={6} xs={12}>
-                                        <img className="w-100" src={suite.img} alt="" /> <br />
-                                    </Col>
-                                    <Col className="w-50" md={6} xs={12}>
-                                        <h5 className="font-weight-bold"> {suite.name} </h5>
-                                        <p>{suite.features}</p>
-                                        {/* <p>{suite.info}</p> */}
-                                        <p>
-                                            <WifiIcon style={{ color: "green" }} /> Wifi
+        <Container>
+            <Header2 user={loggedInUser.name || loggedInUser.fName || loggedInUser.email} />
+            <hr className="hr-header" />
+            <div className="d flex">
+                <p>176 stays Sep 19-25 guests</p>
+                <h4 className="font-weight-bold">Stay in {areaName}</h4>
+            </div>
+            <Row>
+                <Col className="w-50" >
+                    {
+                        filteredSuites.map(suite =>
+                            <Row key={suite.id}>
+                                <Col className="w-50" md={6} xs={12}>
+                                    <img className="w-100" src={suite.img} alt="" /> <br />
+                                </Col>
+                                <Col className="w-50" md={6} xs={12}>
+                                    <h5 className="font-weight-bold"> {suite.name} </h5>
+                                    <p>{suite.features}</p>
+                                    {/* <p>{suite.info}</p> */}
+                                    <p>
+                                        <WifiIcon style={{ color: "green" }} /> Wifi
                                             <LocalTaxiIcon style={{ color: "mediumblue" }} /> Free Parking
                                             <RoomServiceIcon style={{ color: "darkblue" }} /> Room Service
                                             <ChildFriendlyIcon style={{ color: "blueviolet" }} /> Child Friendly
                                         </p>
-                                        <p>
-                                            <StarIcon style={{ color: 'orange' }} />
-                                            <span className="font-weight-bold"> {' '} {suite.feedback}</span>
-                                            <span className="font-weight-bold">{' '} ${suite.rate}/</span>night
+                                    <p>
+                                        <StarIcon style={{ color: 'orange' }} />
+                                        <span className="font-weight-bold"> {' '} {suite.feedback}</span>
+                                        <span className="font-weight-bold">{' '} ${suite.rate}/</span>night
                                             <span>{' '}{suite.total}</span>
-                                        </p>
-                                    </Col>
-                                </Row>
+                                    </p>
+                                </Col>
+                            </Row>
 
-                            )
-                        }
-                    </Col>
-                    <Col className="w-50">
-                        <img className="w-100" src="https://i.ibb.co/sKj6zBG/acf-google-map-field-interface.png" alt="" />
-                    </Col>
-                </Row>
-            </Container>
-        </div>
+                        )
+                    }
+                </Col>
+                <Col className="w-50">
+                    <img className="w-100" src="https://i.ibb.co/sKj6zBG/acf-google-map-field-interface.png" alt="" />
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

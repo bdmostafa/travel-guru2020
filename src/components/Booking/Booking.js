@@ -8,13 +8,21 @@ import DatePicker from 'react-datepicker';
 const Booking = () => {
     const { areaName } = useParams();
     const selectedArea = areaData.find(area => area.areaName === areaName);
+    // Get todays date as a starting date
     const [startDate, setStartDate] = useState(new Date());
+    // Set state 3 days as a default duraction value
+    const [endDate, setEndDate] = useState(()=> {
+        const today = new Date();
+        const duration = 3;
+        return today.setDate(today.getDate() + duration)
+    });
     const [userDestinationData, setUserDestinationData] = useState({
         origin: '',
         destination: '',
         startDate: '',
         endDate: ''
     });
+    
     // const { origin, destination } = userDestinationData;
 
     // Booking state will be true when booking form is filled up
@@ -101,8 +109,8 @@ const Booking = () => {
                                         <DatePicker
                                             name="endDate"
                                             className="form-control mr-auto"
-                                            selected={startDate}
-                                            onChange={date => setStartDate(date)}
+                                            selected={endDate}
+                                            onChange={date => setEndDate(date)}
                                             required 
                                         />
                                     </Form.Group>

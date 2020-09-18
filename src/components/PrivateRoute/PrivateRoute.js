@@ -4,6 +4,7 @@ import { UserContext } from '../../App';
 
 const PrivateRoute = ({ children, ...rest }) => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    // Executes children components when loggedInUser email or name (some FB account have only name) is found
     return (
         <Route
             {...rest}

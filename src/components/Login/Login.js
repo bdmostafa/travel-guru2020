@@ -23,7 +23,7 @@ const Login = () => {
     });
 
     // Destructuring user state
-    const { isSignedIn, fName, lName, email, password } = user;
+    const { isSignedIn, fName, lName, email, password, error, success } = user;
     // console.log(user)
 
     // Initialize firebase/login framework
@@ -33,7 +33,9 @@ const Login = () => {
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
-    console.log(loggedInUser)
+
+    // console.log(loggedInUser)
+    
     const handleResponse = (res, redirect) => {
         setUser(res);
         setLoggedInUser(res);
@@ -82,7 +84,7 @@ const Login = () => {
                     })
             }
         } else {
-            alert('Oops... Password not matched. Please try again.')
+            // alert('Oops... Password not matched. Please try again.')
         }
 
     }
@@ -124,6 +126,11 @@ const Login = () => {
         <Container>
             <Header2 />
             <Form className="login-form" onSubmit={handleSubmit}>
+                <p style={{ color: 'red' }}> {error} </p>
+                {
+                    success
+                        && <p style={{ color: 'green' }}> User  {newUser ? 'created' : 'logged in'} successfully. </p>
+                }
                 {
                     newUser
                         ? <>

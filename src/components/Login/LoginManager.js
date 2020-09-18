@@ -5,6 +5,7 @@ import firebaseConfig from './firebase.config';
 
 // Initialize Firebase
 export const initLoginFramework = () => {
+    // To protect initialize firebase repeatedly
     if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
 }
 
